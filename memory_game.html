@@ -1,0 +1,431 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<style type="text/css">
+div#memory_board{
+	background:#ccc;
+	width:100%;
+	padding:24px;
+	height: 100%;
+	margin:0px auto; 
+   background: url(http://cdn.wallpapersafari.com/15/8/xRePDu.jpg);
+}
+#startmess{
+    font-size: 20px;
+    font-family: cursive;
+}
+p{
+    margin-top: -9px;
+    margin-left: -5px;
+    font-family: 'overlay',sans-serif;
+}
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.btn {
+        display: inline-block;
+    padding: 8px 13px;
+    color: white;
+    margin-bottom: 0;
+    background-color: #449d44;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: cursive;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.header{
+    font-size: 30px;
+}
+.endbox{
+    left: 588px;
+    width: 22%;
+    top: 198px;
+	z-index:11;
+    position: absolute;
+    background-color: aliceblue;
+    color: #333333;
+    border-radius: 8px;
+    box-shadow: 1px 1px 1px #333333;
+    font-size: 18px;
+    padding: 16px;
+    margin: 0px auto;
+    display: block;
+}
+.messbox {
+z-index:11;
+    width: 360px;
+       background-color: lightyellow;
+    background-color: aliceblue;
+    color: #333333;
+    border-radius: 8px;
+    box-shadow: 1px 1px 1px #333333;
+    font-size: 18px;
+    padding: 16px;
+    text-align: center;
+    display: none;
+    position: absolute;
+}
+h1{
+    margin: 0px auto;
+    color: white;
+    font-size: 44px;
+    text-align: center;
+	margin-bottom: 32px;
+}
+#socre-n-level{
+    padding: 9px;
+    width: 270px;
+    position: relative;
+    top: 16px;
+    margin: 0px auto;
+}
+#timeCount{
+    color:white;
+}
+.card {
+  position: relative;
+  float: left;
+  padding-bottom: 25%;
+  width: 25%;
+  text-align: center;
+}
+
+.card__front,
+.card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.card__front,
+.card__back {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transition: -webkit-transform 0.3s;
+          transition: transform 0.3s;
+}
+
+.card__front {
+  background-color: #ff5078;
+}
+
+.card__back {
+  background-color: #1e1e1e;
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+#inner-container{
+    width: 19%;
+    margin: 0px auto;
+}
+.clock{
+    top: 81px;
+    display: inline-block;
+    float: right;
+    margin-right: 85px;
+    width: 10%;
+}
+#level{
+    width: 102px;
+    margin-left: 14px;
+    float: left;
+    font-size: 25px;
+    color: white;
+}
+#helpText{
+    width: 28%;
+	display:none;
+    float: inherit;
+    padding: 11px;
+    margin: 0 auto;
+}
+#scoreLev{
+        width: 121px;
+    float: left;
+    font-size: 25px;
+    color: white;
+}
+.inner-col{
+width: 243px;
+    float: left;
+    display: block;
+}
+
+.inner-col div{
+    border-radius: 5px;
+    width: 9px;
+    height: 11px;
+    float: left;	
+    padding: 20px;
+    font-size: 29px;
+    cursor: pointer;
+	  color: white;
+    text-align: center;
+    margin: 5px;
+}	
+.message {
+    position: absolute;
+    font-weight: bold;
+    font-size: 16px;
+    width: 16%;
+    color: gainsboro;
+    display: inline-block;
+}
+.card.effect__click.flipped .card__front {
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+.card.effect__click.flipped .card__back {
+  -webkit-transform: rotateY(0);
+          transform: rotateY(0);
+}
+</style>
+</head>
+<body>
+<div id="startpanel" class="messbox" style="left:559px; top: 177px; display: block;">
+   <div id="starttitle" class="header">Level <span id='nextLevel'>1</span></div>
+   <div id="startmess">You have <span id='displayTime'>20</span> seconds to match <span id="noOfPairs">6</span> pairs.</div>
+   <button id="btnStart" class="btn btn-success" style="margin-top:16px">Start</button>
+</div>
+<div id="endpanel" class="endbox" style="left:559px; top: 177px; display: none;">
+   <div id="starttitle" class="header"><span>Level</span><span id="isComplete"></span> </div>
+   <div id="startmess">your score : <span id='levelScore'></span></div>
+   <button id="retryBtn" class='btn' style="margin-top:16px;margin-left:79px;">Retry</button>
+   <button id="nextBtn" class='btn' style="margin-top:16px;margin-left: 79px;">Next</button>
+   <button id="exitBtn" class='btn' style="margin-top:16px;    margin-right: 97px;float:right;">Exit</button>
+</div>
+<script>
+var gameTime = 0;
+var score = 0;
+var memArray = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H'];
+var levelScoreArray = [5, 10, 15, 40, 50, 60, 70, 80, 90, 100, 110];
+var timeArray = [20, 30, 40, 50, 60, 70, 80, 90, 100, 110];
+var memValues = [];
+var memTileIds = [];
+var tileFlipped = 0;
+var noOfPairs = 6;
+var interval = 0;
+$(document).ready(function() {
+    newBoard();
+    var i = 1;
+    $("#btnStart").click(function() {
+        if (gameTime == 0) {
+            gameTime =timeArray[0];
+            newBoard();
+        }
+        $("#helpText").show();
+        $("#startpanel").hide();
+        interval = starTimer(gameTime, i);
+    })
+    $("#retryBtn").click(function() {
+        gameTime = timeArray[0];
+        newBoard();
+        score = 0;
+		 $("#displayTime").text(gameTime);
+        $("#nextLevel").text(1);
+        $("#scoreInNumer").text(0);
+        $("#helpText").show();
+        $("#noOfPairs").text(6);
+        $("#endpanel").hide();
+        $("#startpanel").show();
+    });
+    $("#nextBtn").click(function() {
+        gameTime = timeArray[i];
+        score = 0;
+        newBoard();
+        $("#displayTime").text(timeArray[i]);
+        $("#levelVal").text(i + 1);
+        $("#nextLevel").text(i + 1);
+        $("#timeCount").text(timeArray[i]);
+        i++;
+        $("#startpanel").show();
+        noOfPairs = noOfPairs + 2;
+        $("#noOfPairs").text(noOfPairs);
+        $("#helpText").show();
+        $("#endpanel").hide();
+
+    });
+    $("#exitBtn").click(function() {
+        window.close();
+    });
+    (function() {
+        var cards = $(".card.effect__click");
+        for (var i = 0, len = $(".card.effect__click").length; i < len; i++) {
+            var card = cards[i];
+            clickListener(card);
+        }
+
+        function clickListener(card) {
+            $(card).click(function() {
+                var c = $(this).prop('class');
+                c.includes("flipped") === true ? $(this).removeClass("flipped") : $(this).addClass("flipped");
+            });
+        }
+    })();
+
+    function starTimer(gameTime, i) {
+
+        var interval = setInterval(function() {
+            if (gameTime > 0)
+                $('.clock').children().text(--gameTime);
+            else {
+                stopTimmer(interval);
+                if (score >= levelScoreArray[i]) {
+                    $("#isComplete").text(' Complete');
+                    $("#nextBtn").show();
+                    $("#levelVal").text(i);
+                    $("#retryBtn").hide();
+                } else {
+                    $("#nextBtn").hide();
+                    $("#levelVal").text(1);
+                    $("#isComplete").text(' Failed');
+                    $("#retryBtn").show();
+                }	
+                $("#endpanel").show();
+                $("#levelScore").text($("#scoreInNumer").text());
+                $("#helpText").hide();
+            }
+        }, 1000);
+        return interval;
+    }
+
+
+})
+Array.prototype.memTileShuffle = function() {
+    var j, temp;
+    var i = this.length;
+    while (--i) {
+        j = Math.floor(Math.random() * (i + 1));
+        temp = this[j];
+        this[j] = this[i];
+        this[i] = temp;
+    }
+}
+
+function stopTimmer(interval) {
+    clearInterval(interval);
+}
+
+function newBoard() {
+    tileFlipped = 0;
+    var output = '';
+    var content = "";
+    memArray.memTileShuffle();
+    var innerDiv = "";
+
+    for (var i = 0; i < memArray.length; i++) {
+        output += '<div class="card effect__click" id="tile_' + i + '" onclick="flipMemTile(this,\'' + memArray[i] + '\')"><div class="card__front">' +
+            '<span class="card__text"></span></div><div class="card__back"><span class="card__text"></span></div></div>';
+        if ((i + 1) % 4 == 0) {
+            innerDiv = "<div class='inner-col' id='grid-col-" + i + "'>" + output + "</div>";
+            content += innerDiv;
+            innerDiv = "";
+            output = "";
+        }
+    }
+    content += "";
+    $("#memory_board").find("#inner-container").html(content);
+}
+
+function flipMemTile(tile, val) {
+    if ($($(tile).children()[1]).find('span').html() == "" && memValues.length < 2) {
+        var id = "#" + $(tile).prop('id');
+        $(id).addClass('flipped');
+        var value = "<p>" + val + "<p>";
+        $($(id).children()[1]).find('span').html(value);
+        if (memValues.length == 0) {
+            memValues.push(val);
+            memTileIds.push($(tile).prop("id"));
+        } else if (memValues.length == 1) {
+            memValues.push(val);
+            memTileIds.push($(tile).prop("id"));
+            if (memValues[0] == memValues[1]) {
+                score += 20;
+                $("#scoreInNumer").text(score);
+                setTimeout((function() {
+                    $("#" + memTileIds[0]).delay(100).fadeTo(1200, 0);
+                    $("#" + memTileIds[1]).delay(100).fadeTo(1200, 0);
+                })(), 500);
+                tileFlipped += 2;
+                memTileIds = [];
+                memValues = [];
+                if (tileFlipped == memArray.length) {
+                    var level = parseInt($("#levelVal").text());
+                    if (score > levelScoreArray[level - 1]) {
+                        $("#retryBtn").hide();
+                        $("#isComplete").text(' Complete');
+                    } else {
+                        $("#nextBtn").hide();
+                        $("#isComplete").text(' Failed');
+                    }
+                    $("#levelScore").text(score);
+                    $("#endpanel").show();
+                    stopTimmer(interval);
+
+                    $("#levelScore").show();
+                    //alert("game over ...getting new game");
+                    score = 0;
+                    $(tile).html("");
+                    newBoard();
+                }
+            } else {
+                score -= 5;
+                $("#scoreInNumer").text(score);
+                setTimeout(flipBack, 600);
+            }
+        }
+    }
+}
+
+function flipBack() {
+    $("#" + memTileIds[0]).removeClass('flipped');
+    $("#" + memTileIds[0]).find('span').html("");
+    $("#" + memTileIds[1]).removeClass('flipped');
+    $("#" + memTileIds[1]).find('span').html("");
+    memTileIds = [];
+    memValues = [];
+}
+</script>
+<div id="memory_board">
+   <h1>Lets check your memory..!</h1>
+   <div id='helpText'>
+      <div id='mess' class='message'>
+         <span>Click a tile and then try match it</span>
+      </div>
+      <div id='clock' class='clock' style='left: 642px; top: 81px;'>
+         <span id='timeCount'style='color:white'>20</span>
+      </div>
+   </div>
+   <div id='inner-container'>
+   </div>
+   <div id='socre-n-level'>
+      <div id='scoreLev' >
+         <span>Score : </span><span id='scoreInNumer'>0<span>
+      </div>
+      <div id='level' >
+         <span>Level : </span><span id='levelVal'>1<span>
+      </div>
+   </div>
+</div>
+</div>
+<script></script>
+</body>
+</html>
