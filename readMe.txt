@@ -13,13 +13,14 @@ Steps:
 
 
 App Route: run these url to perform the operation.
+
 http://localhost:5000/GetAllRecord
 
-http://localhost:5000/GetRecord
+http://localhost:5000/GetRecord?id=4
 
-http://localhost:5000/AddRecord
+http://localhost:5000/AddRecord?id=10&expense_date=20120220&expense_category=travel&type=credit&amount=1300
 
-http://localhost:5000/UpdateRecord
+http://localhost:5000/UpdateRecord?id=6&amount=1400
 
-http://localhost:5000/DeleteRecord
+http://localhost:5000/DeleteRecord?id=9
 

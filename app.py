@@ -36,21 +36,32 @@ app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
 
 
-#Retrieve all record    
+#Retrieve all record
+class MyEncoder(json.JSONEncoder):
+
+    def default(self, row):
+        if isinstance(row, datetime.datetime):
+            return row.__str__()
+
+        
+
 class GetAllRecord(Resource):
     def get(self):
         try: 
             # Parse the arguments
             parser = reqparse.RequestParser()
             parser.add_argument('id', type=str)
+            parser.add_argument('expense_date', type=str)
+            parser.add_argument('expense_category', type=str)
+            parser.add_argument('type', type=str)
+            parser.add_argument('amount', type=str)
             args = parser.parse_args()
 
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.execute("SELECT ID,Expense_Date,Expense_category,Type,Amount FROM expense")
             # fetch all of the rows from the query
-            rows = cursor.fetchall()
-          
+            row = cursor.fetchall()
             conn.commit()
             return {'StatusCode':'200','Message': 'Success'}
 
