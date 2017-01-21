@@ -50,13 +50,7 @@ class GetAllRecord(Resource):
         try: 
             # Parse the arguments
             parser = reqparse.RequestParser()
-            parser.add_argument('id', type=str)
-            parser.add_argument('expense_date', type=str)
-            parser.add_argument('expense_category', type=str)
-            parser.add_argument('type', type=str)
-            parser.add_argument('amount', type=str)
             args = parser.parse_args()
-
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.execute("SELECT ID,Expense_Date,Expense_category,Type,Amount FROM expense")
@@ -77,13 +71,10 @@ class GetRecord(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('id', type=str)
             args = parser.parse_args()
-           
-
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.execute("SELECT ID,Expense_Date,Expense_category,Type,Amount FROM expense where ID=id")
             data = cursor.fetchall()
-
             conn.commit()
             return {'StatusCode':'200','Message': 'Success'}
 
@@ -107,7 +98,6 @@ class AddRecord(Resource):
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.execute("INSERT INTO  expense(ID,Expense_Date,Expense_category,Type,Amount ) VALUES ( id,expense_date,expense_category,type,amount )")
-
             conn.commit()
             return {'StatusCode':'200','Message': 'Success'}
 
@@ -141,14 +131,11 @@ class DeleteRecord(Resource):
             parser = reqparse.RequestParser()
             parser.add_argument('id', type=str)
             args = parser.parse_args()
-          
-      
-
+            
             conn = mysql.connect()
             cursor = conn.cursor()
             cursor.execute("DELETE from expense  where ID=id")
             data = cursor.fetchall()
-
             conn.commit()
             return {'StatusCode':'200','Message': 'Success'}
 
@@ -161,7 +148,6 @@ api.add_resource(GetRecord, '/GetRecord')
 api.add_resource(AddRecord, '/AddRecord')
 api.add_resource(UpdateRecord, '/UpdateRecord')
 api.add_resource(DeleteRecord, '/DeleteRecord')           
-
 
 if __name__ == '__main__':
  app.run(debug=True)
